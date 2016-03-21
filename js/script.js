@@ -11,7 +11,7 @@ map.featureLayer.on('ready', function(e) {
 		item.className = "marker-item";
 		item.innerHTML = layer.toGeoJSON().properties.title;
 		item.onclick = function() {
-			map.setView(layer.getLatLng(), 7);
+			map.setView(layer.getLatLng(), 5);
 			layer.openPopup();
 		};
 	});
