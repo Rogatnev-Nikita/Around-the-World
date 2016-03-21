@@ -1,8 +1,8 @@
+/*
 var map = L.map('map');
 
 L.tileLayer('http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png').addTo(map);
 L.tileLayer('http://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png').addTo(map);
-
 
 var control = L.Routing.control({
 	waypoints: [
@@ -19,7 +19,7 @@ var control = L.Routing.control({
 		L.latLng(13.7248944,100.4926854),
 		L.latLng(11.579524,104.8199757),
 		L.latLng(22.3595821,114.0004434),
-		L.latLng(39.9390623,116.2570346)/*,
+		L.latLng(39.9390623,116.2570346),
 		L.latLng(21.3281101,-157.8340879),
 		L.latLng(37.7577627,-122.4727051),
 		L.latLng(34.0207037,-118.5521572),
@@ -37,7 +37,7 @@ var control = L.Routing.control({
 		L.latLng(40.4380637,-3.7497475),
 		L.latLng(-33.9140975,18.3752024),
 		L.latLng(30.0595581,31.2233592),
-		L.latLng(59.7986826,30.2718243)*/
+		L.latLng(59.7986826,30.2718243)
 	],
 	geocoder: L.Control.Geocoder.nominatim(),
     routeWhileDragging: false,
@@ -53,3 +53,46 @@ var control = L.Routing.control({
 }).addTo(map);
 
 L.Routing.errorControl(control).addTo(map);
+*/
+
+
+    L.mapbox.accessToken = 'pk.eyJ1IjoieWJyYm5maGp1Zm55dGQiLCJhIjoiY2lsdzJnZHdtMDA4eHZmbTY5YTlvaTZtdSJ9';
+    var map = L.mapbox.map('map', 'mapbox.streets')
+    .setView([37.7729, -122.4333], 13);
+    map.on('click', function(e) {
+        // Let's add a callback to makeMarker so that it can draw the route only
+        // *after* it's done processing the marker adding.
+        makeMarker(e, drawRoute);
+    });
+    var waypoints = [];
+    var polyline = L.polyline([]).addTo(map);
+    function makeMarker(e, done) {
+        var marker = L.marker(e.latlng, { draggable: true }).addTo(map);
+        marker.on('dragend', drawRoute);
+        waypoints.push(marker);
+        return done();
+    }
+    function drawRoute() {
+        if (waypoints.length < 2) return;
+        // Directions API request looks like
+        // http://api.tiles.mapbox.com/v4/directions/mapbox.driving/
+        //    -122.42,37.78;-77.03,38.91.json?access_token={access_token}
+        // We'll construct this using latlngs from the markers in waypoints.
+        var points = waypoints.map(function(marker) {
+            var latlng = marker._latlng;
+            return [latlng.lng, latlng.lat].join(',');
+        }).join(';');
+        var directionsUrl = 'http://api.tiles.mapbox.com/v4/directions/mapbox.driving/' +
+        points + '.json?access_token=' + L.mapbox.accessToken;
+        $.get(directionsUrl, function(data) {
+            // Do something with the directions returned from the API.
+            var route = data.routes[0].geometry.coordinates;
+            route = route.map(function(point) {
+                // Turns out if we zoom out we see that the lat/lngs are flipped,
+                // which is why it didn't look like they were being added to the
+                // map. We can invert them here before drawing.
+                return [point[1], point[0]];
+            });
+            polyline.setLatLngs(route);
+        });
+    }
