@@ -1,7 +1,7 @@
 /* map */
 L.mapbox.accessToken = 'pk.eyJ1IjoieWJyYm5maGp1Zm55dGQiLCJhIjoiY2lsdzJnZHdtMDA4eHZmbTY5YTlvaTZtdSJ9.V8utWdptmcKtbUYAd3Y0yw';
 var map = L.mapbox.map('map', 'ybrbnfhjufnytd.pfed98ij').setView([40, 50], 4);
-L.mapbox.styleLayer('mapbox://styles/mapbox/emerald-v8').addTo(map);
+/* L.mapbox.styleLayer('mapbox://styles/mapbox/emerald-v8').addTo(map); */
 
 /* marker-list */
 var markerList = document.getElementById('marker-list');
