@@ -96,6 +96,13 @@ body {
     background: #1c87bb;
     color: #ffffff;
 }
+.marker_item small{
+    color: grey;
+}
+.marker_item.active small{
+    color: #ffffff;
+}
+
 .leaflet-control-container {
     display: none;
 }
