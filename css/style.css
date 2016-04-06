@@ -1,39 +1,48 @@
 html,
 body {
-    margin: 0;
-    padding: 0;
     width: 100%;
     height: 100vh;
     max-height: 100vh;
+    margin: 0;
+    padding: 0;
+
     font-family: Geneva, Arial, Helvetica, sans-serif;
     font-size: 0;
     line-height: 1.5;
 }
 #map {
     width: 100%;
+
     background: rgba(0, 0, 0, 0.1);
 }
 .map,
 .menu-block {
+    display: inline-block;
+    overflow-x: visible;
+
     box-sizing: border-box;
     height: 100vh;
-    display: inline-block;
-    vertical-align: top;
     margin: 0;
     padding: 0;
-    font-size: 14px;
+
+    vertical-align: top;
+
     background: #ffffff;
-    overflow-x: visible;
+
+    font-size: 14px;
 }
 .marker_list {
     overflow-y: scroll;
+
     height: 100vh;
 }
 .menu-block {
-    width: 25%;
     position: fixed;
     top: 0;
     right: -25%;
+
+    width: 25%;
+
     -webkit-transition-duration: 0.3s;
     -moz-transition-duration: 0.3s;
     -o-transition-duration: 0.3s;
@@ -42,20 +51,26 @@ body {
     right: 0;
 }
 .controls {
-    font-size: 0;
     position: absolute;
+
     width: 96px;
     height: 90px;
     margin-left: -96px;
+
     background-color: #1c87bb;
+
+    font-size: 0;
 }
 .controls span {
-    display: block;
     position: absolute;
     top: 40px;
-    left: 18px;
     right: 18px;
+    left: 18px;
+
+    display: block;
+
     height: 8px;
+
     background: #ffffff;
 }
 .controls span::before {
@@ -67,34 +82,42 @@ body {
 .controls span::after,
 .controls span::before {
     position: absolute;
-    display: block;
     left: 0;
+
+    display: block;
+
     width: 100%;
     height: 8px;
-    background-color: #ffffff;
+
     content: "";
+
+    background-color: #ffffff;
 }
 .marker_item {
     display: block;
+
     margin: 0;
     padding: 17px 30px 13px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
     text-decoration: none;
-    color: #1c87bb;
     text-transform: uppercase;
+
+    color: #1c87bb;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 .marker_item:hover {
-    background: rgba(0, 0, 0, 0.05);
-    border-bottom: 1px solid rgba(0, 0, 0, 0);
     cursor: pointer;
+
+    border-bottom: 1px solid rgba(0, 0, 0, 0);
+    background: rgba(0, 0, 0, 0.05);
 }
 .marker_item:active {
-    background: rgba(0, 0, 0, 0.1);
     border-bottom: 1px solid rgba(0, 0, 0, 0);
+    background: rgba(0, 0, 0, 0.1);
 }
 .marker_item.active{
-    background: #1c87bb;
     color: #ffffff;
+    background: #1c87bb;
 }
 .marker_item small{
     color: grey;
@@ -109,16 +132,19 @@ body {
 @media screen and (max-width: 980px) {
     #map,
     .menu-block {
-        width: 100%;
-        display: block;
-        height: 50vh;
         position: static;
+
+        display: block;
+
+        width: 100%;
+        height: 50vh;
     }
     .controls {
         display: none;
     }
     .marker_list {
         overflow-x: auto;
+
         max-height: 50vh;
     }
 }
